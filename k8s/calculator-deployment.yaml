@@ -1,34 +1,40 @@
-# calculator-deployment.yaml
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: apps/v1  # Specifies the API version for the Deployment resource
+kind: Deployment     # Declares this resource as a Deployment
 metadata:
-  name: calculator
+  name: calculator   # Name of the Deployment
 spec:
-  replicas: 1
+  replicas: 1        # Number of pod replicas to run
   selector:
     matchLabels:
-      app: calculator
+      app: calculator  # Matches pods with the label 'app: calculator'
   template:
     metadata:
       labels:
-        app: calculator
+        app: calculator  # Label applied to pods created by this template
     spec:
       containers:
-        - name: calculator
-          image: yourdockerhub/calculator:latest  # build & push first
+        - name: calculator                         # Name of the container
+          image: yourdockerhub/calculator:latest   # Docker image to use (must be built and pushed first)
           ports:
-            - containerPort: 3001
+            - containerPort: 3001                  # Port exposed by the container
           env:
-            - name: MONGO_URL
+            - name: MONGO_URL                      # Environment variable to connect to MongoDB
               value: "mongodb://calcuser:calcpass@mongodb:27017/calculatorDB?authSource=admin"
+              # MongoDB connection string:
+              # - Username: calcuser
+              # - Password: calcpass
+              # - Hostname: mongodb (should match the MongoDB service name)
+              # - Port: 27017
+              # - Database: calculatorDB
+              # - authSource: admin (auth database)
 ---
-apiVersion: v1
-kind: Service
+apiVersion: v1       # API version for the Service resource
+kind: Service        # Declares this as a Kubernetes Service
 metadata:
-  name: calculator-service
+  name: calculator-service  # Name of the Service
 spec:
   selector:
-    app: calculator
+    app: calculator   # Matches pods with the label 'app: calculator'
   ports:
-    - port: 3001
-      targetPort: 3001
+    - port: 3001       # Port exposed by the service to the outside
+      targetPort: 3001 # Port on the container the service will forward to

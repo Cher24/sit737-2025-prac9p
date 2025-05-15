@@ -1,23 +1,22 @@
-# mongo-pv-pvc.yaml
-apiVersion: v1
-kind: PersistentVolume
+apiVersion: v1  # Specifies the API version for the PersistentVolume resource
+kind: PersistentVolume  # Declares this resource as a PersistentVolume (PV)
 metadata:
-  name: mongo-pv
+  name: mongo-pv  # Name of the PersistentVolume
 spec:
   capacity:
-    storage: 1Gi
+    storage: 1Gi  # Sets the storage capacity to 1Gi (1 gigabyte)
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteOnce  # Allows the volume to be mounted as read-write by a single node
   hostPath:
-    path: "/data/mongo"  # works in Minikube
+    path: "/data/mongo"  # Path on the host node’s filesystem (used in local clusters like Minikube)
 ---
-apiVersion: v1
-kind: PersistentVolumeClaim
+apiVersion: v1  # Specifies the API version for the PersistentVolumeClaim resource
+kind: PersistentVolumeClaim  # Declares this resource as a PersistentVolumeClaim (PVC)
 metadata:
-  name: mongo-pvc
+  name: mongo-pvc  # Name of the PersistentVolumeClaim
 spec:
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteOnce  # Requests a volume that can be mounted read-write by one node
   resources:
     requests:
-      storage: 1Gi
+      storage: 1Gi  # Requests 1Gi of storage from the matched PersistentVolume

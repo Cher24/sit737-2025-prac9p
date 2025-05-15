@@ -1,49 +1,49 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: apps/v1  # Specifies the API version for the Deployment
+kind: Deployment     # Declares this configuration as a Deployment
 metadata:
-  name: mongodb
+  name: mongodb      # Name of the Deployment
 spec:
-  replicas: 1
+  replicas: 1        # Number of pod replicas to maintain
   selector:
     matchLabels:
-      app: mongodb
+      app: mongodb   # Matches pods with label app: mongodb
   template:
     metadata:
       labels:
-        app: mongodb
+        app: mongodb  # Labels assigned to the pod; used for selection
     spec:
       containers:
-      - name: mongodb
-        image: mongo
+      - name: mongodb         # Container name
+        image: mongo          # Uses the official MongoDB image from Docker Hub
         ports:
-        - containerPort: 27017
+        - containerPort: 27017  # Exposes port 27017 (MongoDB default port) inside the container
         env:
-        - name: MONGO_INITDB_ROOT_USERNAME
+        - name: MONGO_INITDB_ROOT_USERNAME  # Sets MongoDB root username from secret
           valueFrom:
             secretKeyRef:
-              name: mongodb-secret
-              key: MONGO_INITDB_ROOT_USERNAME
-        - name: MONGO_INITDB_ROOT_PASSWORD
+              name: mongodb-secret  # Name of the Kubernetes secret
+              key: MONGO_INITDB_ROOT_USERNAME  # Key in the secret
+        - name: MONGO_INITDB_ROOT_PASSWORD  # Sets MongoDB root password from secret
           valueFrom:
             secretKeyRef:
-              name: mongodb-secret
-              key: MONGO_INITDB_ROOT_PASSWORD
+              name: mongodb-secret  # Name of the Kubernetes secret
+              key: MONGO_INITDB_ROOT_PASSWORD  # Key in the secret
         volumeMounts:
-        - name: init-script
-          mountPath: /docker-entrypoint-initdb.d
+        - name: init-script  # Refers to the volume named 'init-script'
+          mountPath: /docker-entrypoint-initdb.d  # Mounts to the MongoDB init script directory
       volumes:
-      - name: init-script
+      - name: init-script  # Defines a volume named 'init-script'
         configMap:
-          name: mongo-init-script
+          name: mongo-init-script  # Uses a ConfigMap named 'mongo-init-script' for init scripts
 
 ---
-apiVersion: v1
-kind: Service
+apiVersion: v1  # Specifies the API version for the Service
+kind: Service    # Declares this configuration as a Service
 metadata:
-  name: mongodb
+  name: mongodb  # Name of the Service
 spec:
   selector:
-    app: mongodb
+    app: mongodb  # Selects pods with label app: mongodb
   ports:
-  - port: 27017
-    targetPort: 27017
+  - port: 27017       # Port exposed by the Service
+    targetPort: 27017 # Port the Service forwards to on the Pod

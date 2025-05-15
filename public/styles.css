@@ -1,33 +1,97 @@
+/* styles.css */
+
+/* ----- Global styles ----- */
 body {
-  font-family: Arial, sans-serif;
-  margin: 2rem;
-  background: #f2f2f2;
+  margin: 0;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  background-color: #f5f6f7;
+  color: #001e2b;
+  padding: 20px;
 }
 
-h1, h2 {
-  color: #333;
+h1 {
+  color: #13aa52; /* MongoDB green */
+  font-size: 2.5em;
+  margin-bottom: 20px;
 }
 
+h2 {
+  color: #116149;
+  font-size: 1.8em;
+  margin-top: 40px;
+  border-left: 4px solid #13aa52;
+  padding-left: 10px;
+}
+
+/* ----- Form styles ----- */
 form {
-  display: flex;
-  flex-direction: column;
-  max-width: 300px;
-  margin-bottom: 1rem;
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  max-width: 500px;
 }
 
-input, select, button {
-  margin: 0.5rem 0;
-  padding: 0.5rem;
+label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: 600;
 }
 
-ul {
+select,
+input[type="number"] {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  margin-bottom: 15px;
+  border: 1px solid #ccd5db;
+  border-radius: 5px;
+  font-size: 1em;
+}
+
+/* ----- Buttons ----- */
+button {
+  background-color: #13aa52;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  font-size: 1em;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+button:hover {
+  background-color: #0e8a42;
+}
+
+/* ----- Results section ----- */
+#calcResult {
+  font-size: 1.2em;
+  color: #116149;
+  margin-top: 15px;
+}
+
+ul#resultsList {
   list-style: none;
   padding-left: 0;
+  margin-top: 15px;
+  max-width: 600px;
 }
 
-li {
-  background: white;
-  margin: 0.3rem 0;
-  padding: 0.5rem;
+ul#resultsList li {
+  background-color: #ffffff;
+  padding: 10px 15px;
+  margin-bottom: 8px;
+  border: 1px solid #ccd5db;
   border-radius: 5px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+/* ----- Divider ----- */
+hr {
+  margin: 40px 0;
+  border: none;
+  border-top: 1px solid #ccd5db;
 }
